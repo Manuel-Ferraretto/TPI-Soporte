@@ -1,0 +1,39 @@
+{% extends "customer/base_customer.html" %}
+
+{% block title %} Agregar comidas a mi pedido {% endblock %}
+
+{% block content %}
+
+<br><br>
+{% for c in categories %}
+<table class="table table-striped">
+
+  <p><b>SECCIÓN: {{ c.name }}</b></p>
+  <thead>
+    <tr>
+      <th scope="col">Nombre comida</th>
+      <th scope="col">Descripción</th>
+      <th scope="col">Precio</th>
+      <th scope="col">Acción</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for f in food %}
+      {% if f.category.id_category == c.id_category %}
+    <tr>
+      <td>{{ f.name }}</td>
+      <td>{{ f.description }}</td>
+      <td>{{ f.price }}</td>
+      <td>
+        <a name="" id="" class="btn btn-success" href="#" role="button">Agregar a mi pedido</a>
+      </td>
+    </tr>
+      {% endif %}
+    {% endfor %}
+  </tbody>
+</table>
+<br><br>
+{% endfor %}
+
+
+{% endblock %}

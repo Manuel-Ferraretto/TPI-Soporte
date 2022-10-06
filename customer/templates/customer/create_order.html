@@ -1,0 +1,26 @@
+{% extends "customer/base_customer.html" %}
+
+{% block title %} Nuevo pedido {% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Nuevo pedido</h4>
+    </div>
+
+    <form enctype="multipart/form-data" action="{% url 'customer:create_order' %}" method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <br><br>
+        <input name="" id="" class="btn btn-success" type="submit" value="Crear nuevo pedido">
+        <a name="" id="" class="btn btn-danger" href="{% url 'customer:index_customer' %}" role="button">Cancelar</a>
+
+
+    </form>
+
+</div>
+
+{% endblock %}

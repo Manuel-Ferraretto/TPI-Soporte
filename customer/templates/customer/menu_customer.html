@@ -1,0 +1,10 @@
+{% extends 'customer/base_customer.html' %}
+{% load static %}
+
+{% block title %} Menú principal {% endblock %}
+
+{% block content %}
+
+    <a class="btn btn-primary" role="button" href="{% url 'customer:create_order' %}">Realizar pedido</a>
+
+{% endblock %}

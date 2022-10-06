@@ -1,0 +1,24 @@
+{% extends "administrator/base.html" %}
+
+{% block title %} Editar categoría {% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header">
+       Editar categoría
+    </div>
+    <div class="card-body">
+      <h4 class="card-title">Información de la categoría</h4>
+    </div>
+
+    <form enctype="multipart/form-data" action="{% url 'administrator:edit_category' category.id_category %}" method="post">
+        {% csrf_token %}
+        {% form.as_p %}
+
+        <input name="" id="" class="btn btn-success" type="submit" value="Guardar cambios">
+        <a name="" id="" class="btn btn-danger" href="{% url 'administrator:categories' %}" role="button">Cancelar</a>
+    </form>
+</div>
+
+{% endblock %}

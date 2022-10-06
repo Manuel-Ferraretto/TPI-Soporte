@@ -1,0 +1,41 @@
+{% extends "administrator/base.html" %}
+
+{% block title %} Listado de comidas {% endblock %}
+
+{% block content %}
+
+<a name="" id="" class="btn btn-success" href="{% url 'administrator:create_food' %}" role="button">Agregar una nueva comida</a>
+<br><br>
+{% for c in categories %}
+<table class="table table-striped">
+
+  <p><b>SECCIÓN: {{ c.name }}</b></p>
+  <thead>
+    <tr>
+      <th scope="col">Nombre comida</th>
+      <th scope="col">Descripción</th>
+      <th scope="col">Precio</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for f in food %}
+      {% if f.category.id_category == c.id_category %}
+    <tr>
+      <td>{{ f.name }}</td>
+      <td>{{ f.description }}</td>
+      <td>{{ f.price }}</td>
+      <td>
+        <a name="" id="" class="btn btn-warning" href="{% url 'administrator:edit_food' f.id_food %}" role="button">Editar</a> |
+        <a name="" id="" class="btn btn-danger" href="{% url 'administrator:delete_food' f.id_food %}" role="button">Eliminar</a>
+      </td>
+    </tr>
+      {% endif %}
+    {% endfor %}
+  </tbody>
+</table>
+<br><br>
+{% endfor %}
+
+
+{% endblock %}

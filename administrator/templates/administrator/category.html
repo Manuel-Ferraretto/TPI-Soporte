@@ -1,0 +1,30 @@
+{% extends "administrator/base.html" %}
+
+{% block title %} Listado de categorías {% endblock %}
+
+{% block content %}
+
+<a name="" id="" class="btn btn-success" href="{% url 'administrator:create_category' %}" role="button">Agregar una nueva categoría</a>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID categoría</th>
+      <th scope="col">Nombre categoría</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for cat in categories %}
+    <tr>
+      <td>{{ cat.id_category }}</td>
+      <td>{{ cat.name }}</td>
+      <td>
+        <a name="" id="" class="btn btn-warning" href="{% url 'administrator:edit_category' cat.id_category %}" role="button">Editar</a> |
+        <a name="" id="" class="btn btn-danger" href="{% url 'administrator:delete_category' cat.id_category %}" role="button">Eliminar</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'administrator/base.html' %}
+{% block title %} Menú administrator {% endblock %}
+
+{% block content %}
+
+<form action="" method="post" class="form-home">
+    <a class="btn btn-primary" href="{% url 'administrator:categories' %}" role="button">Categorías</a>
+    <br><br>
+    <a class="btn btn-primary" href="{% url 'administrator:food' %}" role="button">Comidas</a>
+</form>
+
+{% endblock %}
+

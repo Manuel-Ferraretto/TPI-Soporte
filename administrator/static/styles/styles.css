@@ -1,0 +1,12 @@
+.form-home{
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    opacity: 99%;
+    max-width: 260px;
+    margin: 100px auto 100px;
+    padding: 10px 45px 30px 45px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2), 0 5px 0 rgba(0, 0, 0, 0.24);
+    border-radius: 10px;
+}
