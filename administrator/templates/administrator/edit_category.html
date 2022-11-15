@@ -14,7 +14,7 @@
 
     <form enctype="multipart/form-data" action="{% url 'administrator:edit_category' category.id_category %}" method="post">
         {% csrf_token %}
-        {% form.as_p %}
+        {{ form.as_p }}
 
         <input name="" id="" class="btn btn-success" type="submit" value="Guardar cambios">
         <a name="" id="" class="btn btn-danger" href="{% url 'administrator:categories' %}" role="button">Cancelar</a>

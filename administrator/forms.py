@@ -19,7 +19,7 @@ class FoodForm(forms.ModelForm):
 
     class Meta:
         model = Food
-        fields = ['name', 'description', 'available', 'category']  # Se aclara los campos que se incluyen
+        fields = ['name', 'description', 'available', 'category', 'price']  # Se aclara los campos que se incluyen
 
 
 

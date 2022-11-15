@@ -17,18 +17,22 @@ def login_user(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('customer:index_customer')
+            user = user.groups.filter(name='Customers').exists()
+            if user:
+                return redirect('customer:index_customer')
+            else:
+                return redirect('administrator:home')
         else:
             messages.error(request, 'Credenciales inválidas')
-            return render(request, 'login_registration/login.html')
+            return redirect('login_registration:index')
     else:
         form = AuthenticationForm(request)
-        redirect(request, 'login_registration:index', {'form': form})
+        redirect('login_registration:index')
 
 
 def logout_user(request):
     logout(request)
-    return redirect('login_user')
+    return redirect('login_registration:index')
 
 
 def register_user(request):
@@ -40,7 +44,7 @@ def register_user(request):
             user_group = Group.objects.get(name='Customers')   # Agrego el nuevo usuario el grupo Customers
             user.groups.add(user_group)
             messages.success(request, 'Registro de usuario exitoso')
-            return render(request, 'login_registration/login.html')
+            return redirect('login_registration:index')
         else:
             messages.error(request, 'Ocurrió un error al crear el usuario')
             form = CustomUserCreationForm()

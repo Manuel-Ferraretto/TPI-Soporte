@@ -15,9 +15,10 @@
 <body>
     <nav class="navbar navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="#">Ver mis pedidos</a>
-            <a class="navbar-brand" href="#">Menú principal</a>
-            <a class="navbar-brand" href="#">Cerrar sesión</a>
+            <a class="navbar-brand" href="{% url 'customer:index_customer' %}">Menú principal</a>
+            <a class="navbar-brand" href="{% url 'customer:show_cart' %}">Ver mi carrito</a>
+            <a class="navbar-brand" href="{% url 'customer:view_all_orders' %}">Historial pedidos</a>
+            <a class="navbar-brand" href="{% url 'customer:clean_cart' %}">Cerrar sesión</a>
         </div>
     </nav>
     <br>

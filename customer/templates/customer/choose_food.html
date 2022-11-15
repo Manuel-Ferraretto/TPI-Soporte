@@ -4,6 +4,12 @@
 
 {% block content %}
 
+{% if messages %}
+{% for message in messages %}
+    <p class="alert alert-{{ message.tags }}">{{ message }}</p>
+{% endfor %}
+{% endif %}
+
 <br><br>
 {% for c in categories %}
 <table class="table table-striped">
@@ -25,7 +31,7 @@
       <td>{{ f.description }}</td>
       <td>{{ f.price }}</td>
       <td>
-        <a name="" id="" class="btn btn-success" href="#" role="button">Agregar a mi pedido</a>
+        <a class="btn btn-success" role="button" href="{% url 'customer:create_order_food' f.id_food %}">Agregar al pedido</a>
       </td>
     </tr>
       {% endif %}

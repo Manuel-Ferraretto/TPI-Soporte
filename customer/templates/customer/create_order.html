@@ -1,26 +1,28 @@
-{% extends "customer/base_customer.html" %}
+{% load static %}
+<html lang="en">
+<head>
 
-{% block title %} Nuevo pedido {% endblock %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{% block content %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/administrator/styles.css">
+    <title>Nuevo pedido</title>
+</head>
 
 <div class="card">
-    <div class="card-body">
-      <h4 class="card-title">Nuevo pedido</h4>
+    <div class="card-header">
+       Seleccionar horario
     </div>
-
+    <br>
     <form enctype="multipart/form-data" action="{% url 'customer:create_order' %}" method="post">
         {% csrf_token %}
 
         {{ form.as_p }}
 
-        <br><br>
-        <input name="" id="" class="btn btn-success" type="submit" value="Crear nuevo pedido">
-        <a name="" id="" class="btn btn-danger" href="{% url 'customer:index_customer' %}" role="button">Cancelar</a>
-
-
+        <input type="submit" class="btn btn-success" value="Continuar">
+        <a class="btn btn-warning" role="button" href="{% url 'customer:index_customer' %}">Volver atrás</a>
     </form>
-
 </div>
 
-{% endblock %}
