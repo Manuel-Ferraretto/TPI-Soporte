@@ -43,3 +43,10 @@
     <a class="btn btn-warning" role="button" href="{% url 'customer:index_order' %}">Seguir agregando productos</a>
 
 </form>
+
+{% if messages %}
+        {% for message in messages %}
+            <br><br><br>
+            <p class="alert alert-{{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+    {% endif %}

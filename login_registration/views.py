@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -39,8 +39,8 @@ def register_user(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            form.save()
+            user = form.save()
+            user.save()
             user_group = Group.objects.get(name='Customers')   # Agrego el nuevo usuario el grupo Customers
             user.groups.add(user_group)
             messages.success(request, 'Registro de usuario exitoso')

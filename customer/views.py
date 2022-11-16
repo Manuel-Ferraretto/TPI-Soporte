@@ -80,12 +80,12 @@ def create_order_food(request, id):
                 order_food.food = item
                 order_food.quantity = form.cleaned_data['quantity']
                 cart.append(order_food)
-                messages.success(request, 'Item agregado con éxito al pedido')
+                messages.success(request, 'Item agregado con éxito al carrito')
                 return redirect('customer:index_order')
             else:
                 return render(request, 'customer/add_to_order.html', {'form':form, 'item': item})
         else:
-            messages.warning(request, 'El item ya fue agregado al pedido')
+            messages.warning(request, 'El item ya fue agregado al carrito')
             return redirect('customer:index_order')
 
 
@@ -99,18 +99,20 @@ def show_cart(request):
             total_price += item.food.price * item.quantity
         order.total_price = total_price
         orders = Order.objects.filter(user=request.user)
-        flag=False
-        for i in orders:                  
-            if i.state == 'PEND':
-                flag=True
+        flag = False
+        for o in orders:
+            if o.state == 'PEND':
+                flag = True
                 break
-        if flag:
-            return render(request, 'customer/view_pending_order.html', {'cart': cart, 'total_price':total_price}) 
+        if len(cart) > 0:
+            return render(request, 'customer/cart.html', {'cart': cart, 'total_price':total_price}) 
         elif len(cart) == 0:
-            messages.info(request, 'No hay productos agregados al pedido')
+            messages.info(request, 'No hay productos agregados al carrito. Para ello debes realizar un pedido')
             return redirect('customer:index_customer')
-        else:
-            return render(request, 'customer/cart.html', {'cart': cart, 'total_price':total_price})
+        elif flag:
+            messages.info(request, 'El usuario tiene un pedido pendiente por lo tanto el carrito se encuentra vacío')
+            return redirect('customer:index_customer')
+
 
 
 def delete_item_from_cart(request, id):
@@ -119,11 +121,16 @@ def delete_item_from_cart(request, id):
         return redirect('login_registration:index')
     else:
         item = Food.objects.get(id_food=id)
-        order_food = OrderFood.objects.get(food=item)
-        cart.remove(order_food)
+        #order_food = OrderFood.objects.get(food=item)
+        for order_food in cart:
+            if order_food.food.id_food == item.id_food:
+                cart.remove(order_food)
+                break
         if len(cart) == 0:
+            messages.info(request, 'El item se eliminó del carrito')
             return redirect('customer:index_order')
         else:
+            messages.info(request, 'El item se eliminó del carrito')
             return render(request, 'customer/cart.html', {'cart':cart})
 
 
@@ -136,7 +143,7 @@ def send_order(request):
         for order_food in cart:
             order_food.order = order
             order_food.save()
-            order.total_price += order_food.food.price
+        cart.clear()
         messages.success(request, 'Pedido enviado con éxito')
         return redirect('customer:index_customer')
 
@@ -146,8 +153,12 @@ def view_all_orders(request):
         messages.info(request, 'Debes iniciar sesión')
         return redirect('login_registration:index')
     else:
-        orders = Order.objects.filter(user=request.user).order_by('-date_time')
-        return render(request, 'customer/all_orders.html', {'orders':orders})
+        try:
+            orders = Order.objects.filter(user=request.user).order_by('-date_time')
+            return render(request, 'customer/all_orders.html', {'orders':orders})
+        except:
+            messages.info(request, 'Aún No se han realizados pedidos')
+            return redirect('customer:index_customer')
 
 def view_pending_order(request):
     if not request.user.is_authenticated:
