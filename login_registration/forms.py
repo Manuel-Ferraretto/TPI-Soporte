@@ -17,3 +17,4 @@ class CustomUserCreationForm(UserCreationForm):
 
         for fieldname in ['username', 'password1', 'password2']:
             self.fields[fieldname].help_text = None  
+    

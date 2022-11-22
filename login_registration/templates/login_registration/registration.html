@@ -24,7 +24,16 @@
 
     <form class="form" action="{% url 'login_registration:register_user' %}" method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
+        {% for field in registration_form %}
+            <p>
+                {{field.label_tag}}
+                {{field}}
+
+                {% for error in field.errors %}
+                    <p style="color: red">{{error}}</p>
+                {% endfor %}
+            </p>
+        {% endfor %}
         <button class="btn btn-success" type="submit" id="submit">Registrarse</button>
         <a class="btn btn-danger" role="button" href="{% url 'login_registration:index' %}">Cancelar</a>
     </form>
