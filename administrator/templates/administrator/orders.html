@@ -1,0 +1,28 @@
+{% extends "administrator/base.html" %}
+
+{% block title %} Pedidos pendientes {% endblock %}
+
+{% block content %}
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Número de pedido</th>
+      <th scope="col">Fecha - Hora</th>
+      <th scope="col">Acción</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for order in orders %}
+    <tr>
+      <td>{{ order.id_order }}</td>
+      <td>{{ order.date_time }}</td>
+      <td>
+        <a name="" id="" class="btn btn-success" href="{% url 'administrator:change_state' order.id_order %}" role="button">Marcar como entregado</a> 
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

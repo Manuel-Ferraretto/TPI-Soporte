@@ -15,14 +15,22 @@
 <body>
     <nav class="navbar navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="#">Ver pedidos</a>
-            <a class="navbar-brand" href="#">Crear nuevo admin</a>
+            <a class="navbar-brand" href="{% url 'administrator:pending_orders' %}">Ver pedidos pendiente de entrega</a>
             <a class="navbar-brand" href="{% url 'administrator:home' %}">Menú principal</a>
-            <a class="navbar-brand" href="#">Cerrar sesión</a>
+            <a class="navbar-brand" href="{% url 'login_registration:logout' %}">Cerrar sesión</a>
         </div>
     </nav>
     <br>
     <div class="container">
         <br>
-        {% block content %} {% endblock %}
+        {% block content %}
+
+            {% if messages %}
+            {% for message in messages %}
+                <p class="alert alert-{{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+            
+        {% endif %}
+        
+        {% endblock %}
     </div>

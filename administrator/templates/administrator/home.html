@@ -3,11 +3,26 @@
 
 {% block content %}
 
-<form action="" method="post" class="form-home">
-    <a class="btn btn-primary" href="{% url 'administrator:categories' %}" role="button">Categorías</a>
-    <br><br>
-    <a class="btn btn-primary" href="{% url 'administrator:food' %}" role="button">Comidas</a>
-</form>
+{% if messages %}
+{% for message in messages %}
+    <p class="alert alert-{{ message.tags }}">{{ message }}</p>
+{% endfor %}
+{% endif %}
+
+<div class="card">
+    <div class="card-header">
+       Menú
+    </div>
+    <div class="card-body">
+      <h4 class="card-title">Acciones</h4>
+    </div>
+
+    <form action="" method="post" class="form-home">
+        <a class="btn btn-dark" href="{% url 'administrator:categories' %}" role="button">Categorías</a>
+        <a class="btn btn-info" href="{% url 'administrator:food' %}" role="button">Comidas</a>
+    </form>
+
+</div>
 
 {% endblock %}
 

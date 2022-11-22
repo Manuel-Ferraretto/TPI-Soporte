@@ -5,6 +5,17 @@
 
 {% block content %}
 
-    <a class="btn btn-primary" role="button" href="{% url 'customer:create_order' %}">Realizar pedido</a>
+<h3><b>Bienvenido {{ current_user.first_name }} {{ current_user.last_name }}</b></h3>
+
+    {% csrf_token %}
+    <a class="btn btn-success" role="button" href="{% url 'customer:create_order' %}">Realizar pedido</a><br><br>
+    <a class="btn btn-info" role="button" href="{% url 'customer:view_pending_order' %}">Ver pedido pendiente</a>
+
+    {% if messages %}
+        {% for message in messages %}
+            <br><br><br>
+            <p class="alert alert-{{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
 
 {% endblock %}

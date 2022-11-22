@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -17,37 +17,44 @@ def login_user(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('customer:index_customer')
+            user = user.groups.filter(name='Customers').exists()
+            if user:
+                return redirect('customer:index_customer')
+            else:
+                return redirect('administrator:home')
         else:
             messages.error(request, 'Credenciales inválidas')
-            return render(request, 'login_registration/login.html')
+            return redirect('login_registration:index')
     else:
         form = AuthenticationForm(request)
-        redirect(request, 'login_registration:index', {'form': form})
+        redirect('login_registration:index')
 
 
 def logout_user(request):
     logout(request)
-    return redirect('login_user')
+    return redirect('login_registration:index')
 
 
 def register_user(request):
+    context = {}
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            form.save()
+            user = form.save()
+            user.save()
             user_group = Group.objects.get(name='Customers')   # Agrego el nuevo usuario el grupo Customers
             user.groups.add(user_group)
             messages.success(request, 'Registro de usuario exitoso')
-            return render(request, 'login_registration/login.html')
+            return redirect('login_registration:index')
         else:
-            messages.error(request, 'Ocurrió un error al crear el usuario')
-            form = CustomUserCreationForm()
-            return render(request, 'login_registration/registration.html', {'form': form})
+            context['registration_form'] = form
+            # messages.error(request, 'Ocurrió un error al crear el usuario')
+            # form = CustomUserCreationForm()
+            # return render(request, 'login_registration/registration.html', {'form': form})
     else:
         form = CustomUserCreationForm()
-        return render(request, 'login_registration/registration.html', {'form': form, })
+        context['registration_form'] = form
+    return render(request, 'login_registration/registration.html', context)
 
 
 

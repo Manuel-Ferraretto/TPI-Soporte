@@ -1,0 +1,30 @@
+{% extends "customer/base_customer.html" %}
+
+{% block title %} Historial de pedidos {% endblock %}
+
+{% block content %}
+
+<br><br>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Número de pedido</th>
+      <th scope="col">Fecha - Hora</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Precio total</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in orders %}
+    <tr>
+      <td>{{ i.id_order }}</td>
+      <td>{{ i.date_time }}</td>
+      <td>{{ i.state }}</td>
+      <td>$ {{ i.total_price }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<br><br>
+
+{% endblock %}
